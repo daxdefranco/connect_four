@@ -42,15 +42,16 @@ class Game
   def get_drop_location(array, column)
     row = 7
     unless check_valid(column) == 23
-      column = column - 1
+      column = column.to_i - 1
     end
-    while row >= 0
-      if array[row][column] == 0
-        return row  
+    until row < 0
+      # column.to_i is for sodding minitest
+      if array[row][column.to_i] == 0
+        return row
       end
-      row -= row
-    end  
-    return 23
+      row -= 1
+    end
+    return :full
   end  
   
   def put_player_token(array, row, column, player)

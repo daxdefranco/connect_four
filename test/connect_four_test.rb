@@ -72,16 +72,16 @@ class ConnectFourTest < ConnectFourSpec
     
     #  RUNTIME  #
     
-    it "responds to 'new_grid'" do
-      @game.must_respond_to :new_grid
+    it "responds to 'new_array'" do
+      @game.must_respond_to :new_array
     end
     
     it "responds to 'check_valid'" do
       @game.must_respond_to :check_valid
     end
     
-    it "[check_valid] returns the number if valid" do
-      @game.check_valid(4).must_output 4
+    it "[check_valid] returns 23 if invalid" do
+      @game.check_valid(99).must_equal 23
     end
     
     it "responds to 'get_drop_location'" do
@@ -94,18 +94,15 @@ class ConnectFourTest < ConnectFourSpec
     
     it "[get_drop_location] responds with row number to acceptable user input" do
       input = 3
-      @game.get_drop_location(@new_grid, input).must_equal 7
+      @game.get_drop_location(@new_array, input).must_equal 7
     end
     
-    it "[get_drop_location] responds with '23' to unacceptable user input" do
-      input = 42
-      @game.get_drop_location(@new_grid, input).must_equal 23
+    it "[get_drop_location] responds with :full if the column is full" do
+      input = 4
+      full = @new_array
+      0.upto(7) { |i| full[i][3] = 2 }
+      @game.get_drop_location(full, input).must_equal :full
     end
-    
-    # it "doesn't allow drop locations lower than 1" do
-    #   input = 0
-    #   @game.get_drop_column(input).must_include ""
-    # end
 
   end
 

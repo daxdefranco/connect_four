@@ -21,7 +21,7 @@ module ConnectFour
      end 
      player = 1
      input = gets.chomp
-     @game.get_drop_location(@game.new_array, input)
+     puts @game.get_drop_location(@game.new_array, input)
      # round += 1
   # end
   
