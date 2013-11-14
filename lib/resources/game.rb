@@ -15,7 +15,7 @@ class Game
     puts column_numbers
   end
   
-  # update me!
+  # flag update to allow names
   def get_players
     @p1 = 1
     @p2 = 2

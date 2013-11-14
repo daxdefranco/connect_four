@@ -5,7 +5,7 @@ module ConnectFour
 
   puts @game.start
   
-  # update 'get_players' to accept player names
+  # flag update 'get_players' to accept player names
   @game.get_players
 
   # begin the game
