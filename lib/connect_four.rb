@@ -17,9 +17,10 @@ module ConnectFour
     player = 1
     2.times do
       @game.player_prompt(player)
-      input = (gets || '').chomp
+      input = gets.chomp.to_i
       @game.get_drop_location($current_array, input, player)
-      break if @game.check_win($current_array, player) == :winner
+      winner = @game.check_win($current_array, player)
+      break if winner == :winner
       player = @game.toggle(player)
     end
     round += 1

@@ -39,7 +39,6 @@ class Game
     gameboard_head
     array.each do |a|
       puts "#{a} \n"
-    #   edit this to include @p1 name
       $current_array = array
     end; ""
   end
@@ -49,13 +48,9 @@ class Game
   end
   
   def get_drop_location(array, column, player)
-    # if check_valid(column) == :check_fail
-    #   return :check_fail
-    # else  
-      column = column.to_i - 1
-    # end
+    column -= 1
     7.downto(0).each do |row|
-      if array[row][column.to_i] == 0
+      if array[row][column] == 0
         put_player_token(array, row, column, player)
         break
       end
@@ -67,15 +62,16 @@ class Game
   end  
   
   def put_player_token(array, row, column, player)
-    array[row][column.to_i] = player
+    array[row][column] = player
     clear
     return create_grid(array, player)
   end
 
   def check_valid(column)
-    column = column.to_i
     if column > 8 || column < 1
-      return :check_fail
+      return :check_fail 
+    else
+      return column -= 1 
     end
   end
   
@@ -91,11 +87,7 @@ class Game
   end  
 
   def end_of_game_message(round, player)
-    if round == 64
-      puts "You're both winners"
-    else  
-      puts "\nCongratulations, Player #{player}.  You've won!"
-    end
+    round == 64 ? (puts "You're both winners") : (puts "\nPlayer #{player} has won the game!")
   end
 
   def toggle(player)
