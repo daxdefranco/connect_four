@@ -103,7 +103,7 @@ class ConnectFourTest < ConnectFourSpec
 
       #flag make this work
       it "[get_drop_location] responds with [put_player_token] to acceptable user input" do
-        skip 
+
         # input = 3
         # @game.get_drop_location(@new_array, input, @player).must ??? :put_player_token 
       end
@@ -120,6 +120,10 @@ class ConnectFourTest < ConnectFourSpec
 
     describe "win conditions" do
       
+      it "responds to 'check_win'" do
+        @game.must_respond_to :check_win
+      end
+      
       # LEFT TO RIGHT WIN #
 
        it "responds to 'left_right" do
@@ -128,7 +132,7 @@ class ConnectFourTest < ConnectFourSpec
 
        it "[left_right] throws :winner with matching conditions" do
          left_right_win = @new_array
-         1.upto(4) { |i| left_right_win[5][i] = 2 }
+         1.upto(4) { |i| left_right_win[0][i] = 2 }
          @game.left_right(left_right_win, 2).must_equal :winner
        end
 
@@ -146,7 +150,7 @@ class ConnectFourTest < ConnectFourSpec
 
        it '[down_up] throws :winner with matching conditions' do
          down_up_win = @new_array
-         1.upto(4) { |i| down_up_win[i][3] = 2}
+         0.upto(3) { |i| down_up_win[i][3] = 2}
          @game.down_up(down_up_win, 2).must_equal :winner
        end
 
@@ -164,7 +168,7 @@ class ConnectFourTest < ConnectFourSpec
 
        it "[diagonal_right] throws :winner with matching conditions" do
          diagonal_right_win = @new_array
-         0.upto(3) { |i| diagonal_right_win[6-i][1+i] = 2}
+         0.upto(3) { |i| diagonal_right_win[3-i][4+i] = 2}
          @game.diagonal_right(diagonal_right_win, 2).must_equal :winner
        end
 
@@ -182,7 +186,7 @@ class ConnectFourTest < ConnectFourSpec
 
        it "[diagonal_left] throws :winner with matching conditions" do
          diagonal_left_win = @new_array
-         0.upto(3) { |i| diagonal_left_win[6-i][7-i] = 2}
+         0.upto(3) { |i| diagonal_left_win[3-i][3-i] = 2}
          @game.diagonal_left(diagonal_left_win, 2).must_equal :winner
        end
 

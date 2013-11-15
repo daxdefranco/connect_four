@@ -15,35 +15,35 @@ module ConnectFour
     puts "   Round #{round} - FIGHT! \n\n"
     if round == 1
       puts @game.create_grid(@game.new_array, player)
+      @game.player_prompt(player)
       input = gets.chomp
       @game.get_drop_location(@game.new_array, input, player)
       player = @game.toggle(player)
-      #@game.clear
-      # puts @game.create_grid($current_array, player)
-      puts "\nPlayer #{player}, select a column to drop your game piece"
+      @game.player_prompt(player)
       input = gets.chomp
       puts @game.get_drop_location($current_array, input, player)
     else
       player = 1
       2.times do
-        # @game.clear
-        puts "\nPlayer #{player}, select a column to drop your game piece"
+        @game.player_prompt(player)
         input = (gets || '').chomp
         @game.get_drop_location($current_array, input, player)
         winner = @game.check_win($current_array, player)
+        break if winner == :winner
         player = @game.toggle(player)
       end  
     end 
-
     round += 1
   end
   
 
   # finish the game
-  
-  puts "\nCongratulations, Player #{player}.  You've won!"
-  # k.send :hello,
-  
+  if round == 64
+    puts "You're both winners"
+  else  
+    puts "\nCongratulations, Player #{player}.  You've won!"
+  end
+    
 end
 
 
