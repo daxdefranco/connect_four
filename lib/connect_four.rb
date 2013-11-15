@@ -11,7 +11,6 @@ module ConnectFour
   round = 1
   player = 1
   winner = :none
-   # until @game.check === "IT'S OVER" do
   until  winner == :winner || round == 64 do
     puts "   Round #{round} - FIGHT! \n\n"
     if round == 1
