@@ -1,4 +1,5 @@
-source :rubygems
+source "https://rubygems.org"
 
 gem 'rake'
-gem 'minitest', '~> 5.0.8'
+gem 'minitest'
+gem "colorize", "~> 0.6.0"
