@@ -12,27 +12,16 @@ module ConnectFour
   player = 1
   winner = :none
   until  winner == :winner || round == 64 do
-    puts "   Round #{round} - FIGHT! \n\n"
-    if round == 1
-      puts @game.create_grid(@game.new_array, player)
+    @game.round_indicator(round)
+    puts @game.create_grid(@game.new_array, player) if round == 1
+    player = 1
+    2.times do
       @game.player_prompt(player)
-      input = gets.chomp
-      @game.get_drop_location(@game.new_array, input, player)
+      input = (gets || '').chomp
+      @game.get_drop_location($current_array, input, player)
+      break if @game.check_win($current_array, player) == :winner
       player = @game.toggle(player)
-      @game.player_prompt(player)
-      input = gets.chomp
-      puts @game.get_drop_location($current_array, input, player)
-    else
-      player = 1
-      2.times do
-        @game.player_prompt(player)
-        input = (gets || '').chomp
-        @game.get_drop_location($current_array, input, player)
-        winner = @game.check_win($current_array, player)
-        break if winner == :winner
-        player = @game.toggle(player)
-      end  
-    end 
+    end
     round += 1
   end
   

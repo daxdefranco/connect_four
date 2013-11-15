@@ -13,6 +13,10 @@ class Game
     puts column_numbers
   end
   
+  def round_indicator(round)
+    puts "\n   Round #{round} - FIGHT! \n\n"
+  end
+  
   # flag update to allow names
   # def get_players
   #   @p1 = 1
