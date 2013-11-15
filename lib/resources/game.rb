@@ -106,9 +106,7 @@ class Game
     7.downto(0).each do |row|
       5.times do |column|
         if array[row][column] == player
-          if array[row][column + 1] == player && array[row][column + 2] == player && array[row][column + 3] == player
-            return :winner
-          end   
+          return :winner if [1,2,3].all?{|i| array[row][column + i] == player }  
         end  
       end  
     end
@@ -119,9 +117,7 @@ class Game
     7.downto(3).each do |row|
       8.times do |column|
         if array[row][column] == player
-          if array[row - 1][column] == player && array[row - 2][column] == player && array[row - 3][column] == player
-            return :winner
-          end   
+          return :winner if [1,2,3].all?{|i| array[row - i][column] == player }  
         end  
       end   
     end
@@ -132,9 +128,7 @@ class Game
     7.downto(3).each do |row|
       5.times do |column|
         if array[row][column] == player
-          if array[row - 1][column + 1] == player && array[row - 2][column + 2] == player && array[row - 3][column + 3] == player
-            return :winner
-          end   
+          return :winner if [1,2,3].all?{|i| array[row - i][column + i] == player }
         end  
       end  
     end
@@ -144,9 +138,7 @@ class Game
   def diagonal_left(array, player)
     7.downto(3).each do |cell|
       if array[cell][cell] == player
-        if array[cell - 1][cell - 1] == player && array[cell - 2][cell - 2] == player && array[cell - 3][cell - 3] == player
-          return :winner
-        end   
+        return :winner if [1,2,3].all?{|i| array[cell - i][cell - i] == player } 
       end  
     end
     return :nothing_yet
