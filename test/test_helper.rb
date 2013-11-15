@@ -5,7 +5,5 @@ require 'minitest/autorun'
 require 'connect_four'
 
 class ConnectFourSpec < Minitest::Test
-  
-  
-  
+    
 end

@@ -64,16 +64,16 @@ class ConnectFourTest < ConnectFourSpec
       end
 
       it "has 64 game spaces in an 8x8 grid" do
-        Digest::MD5.hexdigest(@new_grid.inspect).must_equal "e07a21fe38428ede3e99d9b0efc8eb41"
+        Digest::MD5.hexdigest(@new_grid.inspect).must_equal "9d4568c009d203ab10e33ea9953a0264"
       end
 
       it "responds to 'start'" do
         @game.must_respond_to :start
       end
 
-      it "responds to 'get_players" do
-        @game.must_respond_to :get_players
-      end
+      # it "responds to 'get_players" do
+      #   @game.must_respond_to :get_players
+      # end
       
     end
     
@@ -89,8 +89,8 @@ class ConnectFourTest < ConnectFourSpec
         @game.must_respond_to :check_valid
       end
 
-      it "[check_valid] returns 23 if invalid" do
-        @game.check_valid(99).must_equal 23
+      it "[check_valid] returns `check_fail` if invalid" do
+        @game.check_valid(99).must_equal :check_fail
       end
 
       it "responds to 'get_drop_location'" do
@@ -115,96 +115,93 @@ class ConnectFourTest < ConnectFourSpec
         @game.get_drop_location(full, input, @player).must_equal :full
       end
       
+       # LEFT TO RIGHT WIN #
+
+        it "responds to 'left_right" do
+          @game.must_respond_to :left_right
+        end
+
+        it "[left_right] throws :winner with matching conditions" do
+          left_right_win = @new_array
+          1.upto(4) { |i| left_right_win[5][i] = 2 }
+          @game.left_right(left_right_win, 2).must_equal :winner
+        end
+
+        it "[left_right] throws :nothing_yet without matching conditions" do
+          left_right_no_win = @new_array
+          1.upto(3) { |i| left_right_no_win[5][i] = 2 }
+          @game.left_right(left_right_no_win, 2).wont_equal :winner
+        end
+
+        # DOWN TO UP WIN #
+
+        it "responds to 'down_up'" do
+          @game.must_respond_to :down_up
+        end
+
+        it '[down_up] throws :winner with matching conditions' do
+          down_up_win = @new_array
+          1.upto(4) { |i| down_up_win[i][3] = 2}
+          @game.down_up(down_up_win, 2).must_equal :winner
+        end
+
+        it "[down_up] throws :nothing_yet without matching conditions" do
+          down_up_no_win = @new_array
+          1.upto(3) { |i| down_up_no_win[i][3] = 2}
+          @game.down_up(down_up_no_win, 2).wont_equal :winner
+        end
+
+        # DIAGONAL RIGHT WIN #
+
+        it "responds to diagonal_right" do
+          @game.must_respond_to :diagonal_right
+        end
+
+        it "[diagonal_right] throws :winner with matching conditions" do
+          diagonal_right_win = @new_array
+          0.upto(3) { |i| diagonal_right_win[6-i][1+i] = 2}
+          @game.diagonal_right(diagonal_right_win, 2).must_equal :winner
+        end
+
+        it "[diagonal_right] throws :nothing_yet without matching conditions" do
+          diagonal_right_no_win = @new_array
+          0.upto(2) { |i| diagonal_right_no_win[6-i][1+i] = 2}
+          @game.diagonal_right(diagonal_right_no_win, 2).must_equal :nothing_yet
+        end
+
+        #DIAGONAL LEFT WIN # 
+
+        it "responds to diagonal_left" do
+          @game.must_respond_to :diagonal_left
+        end
+
+        it "[diagonal_left] throws :winner with matching conditions" do
+          diagonal_left_win = @new_array
+          0.upto(3) { |i| diagonal_left_win[6-i][7-i] = 2}
+          @game.diagonal_left(diagonal_left_win, 2).must_equal :winner
+        end
+
+        it "[diagonal_left] throws :nothing_yet without matching conditions" do
+          diagonal_left_no_win = @new_array
+          0.upto(2) { |i| diagonal_left_no_win[6-i][7-i] = 2}
+          @game.diagonal_left(diagonal_left_no_win, 2).must_equal :nothing_yet
+        end
+      
     end
 
   end
 
-  describe "Player" do
+  describe "CONNECT FOUR" do
     
     def setup
-      @player = Player.new
+      #relax, nsa
+      @c4 = ConnectFour
+      @game = Game.new
     end
 
-  end
-
-  describe "Win" do
-    
-    def setup
-      @win = Win.new
-      @new_array = Game.new.new_array
-    end
-    
-    # LEFT TO RIGHT WIN #
-    
-    it "responds to 'left_right" do
-      @win.must_respond_to :left_right
-    end
-    
-    it "[left_right] throws :winner with matching conditions" do
-      left_right_win = @new_array
-      1.upto(4) { |i| left_right_win[5][i] = 2 }
-      @win.left_right(left_right_win, 2).must_equal :winner
-    end
-    
-    it "[left_right] throws :nothing_yet without matching conditions" do
-      left_right_no_win = @new_array
-      1.upto(3) { |i| left_right_no_win[5][i] = 2 }
-      @win.left_right(left_right_no_win, 2).wont_equal :winner
-    end
-    
-    # DOWN TO UP WIN #
-    
-    it "responds to 'down_up'" do
-      @win.must_respond_to :down_up
-    end
-    
-    it '[down_up] throws :winner with matching conditions' do
-      down_up_win = @new_array
-      1.upto(4) { |i| down_up_win[i][3] = 2}
-      @win.down_up(down_up_win, 2).must_equal :winner
-    end
-    
-    it "[down_up] throws :nothing_yet without matching conditions" do
-      down_up_no_win = @new_array
-      1.upto(3) { |i| down_up_no_win[i][3] = 2}
-      @win.down_up(down_up_no_win, 2).wont_equal :winner
-    end
-    
-    # DIAGONAL RIGHT WIN #
-    
-    it "responds to diagonal_right" do
-      @win.must_respond_to :diagonal_right
-    end
-    
-    it "[diagonal_right] throws :winner with matching conditions" do
-      diagonal_right_win = @new_array
-      0.upto(3) { |i| diagonal_right_win[6-i][1+i] = 2}
-      @win.diagonal_right(diagonal_right_win, 2).must_equal :winner
-    end
-    
-    it "[diagonal_right] throws :nothing_yet without matching conditions" do
-      diagonal_right_no_win = @new_array
-      0.upto(2) { |i| diagonal_right_no_win[6-i][1+i] = 2}
-      @win.diagonal_right(diagonal_right_no_win, 2).must_equal :nothing_yet
-    end
-    
-    #DIAGONAL LEFT WIN # 
-    
-    it "responds to diagonal_left" do
-      @win.must_respond_to :diagonal_left
-    end
-    
-    it "[diagonal_left] throws :winner with matching conditions" do
-      diagonal_left_win = @new_array
-      0.upto(3) { |i| diagonal_left_win[6-i][7-i] = 2}
-      @win.diagonal_left(diagonal_left_win, 2).must_equal :winner
-    end
-    
-    it "[diagonal_left] throws :nothing_yet without matching conditions" do
-      diagonal_left_no_win = @new_array
-      0.upto(2) { |i| diagonal_left_no_win[6-i][7-i] = 2}
-      @win.diagonal_left(diagonal_left_no_win, 2).must_equal :nothing_yet
-    end
+    # it "starts the game with an empty grid" do
+    #   proc {@c4.start }.must_output @game.start
+    # end
     
   end
 
