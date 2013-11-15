@@ -36,13 +36,8 @@ module ConnectFour
     round += 1
   end
   
-
   # finish the game
-  if round == 64
-    puts "You're both winners"
-  else  
-    puts "\nCongratulations, Player #{player}.  You've won!"
-  end
+  @game.end_of_game_message(round, player)
     
 end
 

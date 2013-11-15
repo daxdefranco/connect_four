@@ -101,11 +101,10 @@ class ConnectFourTest < ConnectFourSpec
         @game.must_respond_to :put_player_token
       end
 
-      #flag make this work
       it "[get_drop_location] responds with [put_player_token] to acceptable user input" do
-
-        # input = 3
-        # @game.get_drop_location(@new_array, input, @player).must ??? :put_player_token 
+        input = 3
+        grid_output = @game.get_drop_location(@new_array, input, 2)
+        Digest::MD5.hexdigest(grid_output.inspect).must_equal "852438d026c018c4307b916406f98c62"
       end
 
       #flag see note in game.rb:get_drop_location
@@ -118,10 +117,23 @@ class ConnectFourTest < ConnectFourSpec
       
     end
 
+    # End #
+
     describe "win conditions" do
       
       it "responds to 'check_win'" do
         @game.must_respond_to :check_win
+      end
+      
+      it "[check_win] returns :winner with matching conditions" do
+        sample_win = @new_array
+         1.upto(4) { |i| sample_win[0][i] = 2 }
+        @game.check_win(sample_win, 2).must_equal :winner
+      end
+      
+      it "puts an appropriate end-of-game message" do
+        round = 10
+        @game.end_of_game_message(round, @player).wont_equal "You're both winners"
       end
       
       # LEFT TO RIGHT WIN #
@@ -198,19 +210,6 @@ class ConnectFourTest < ConnectFourSpec
       
     end
 
-  end
-
-  describe "CONNECT FOUR" do
-    
-    def setup
-      #relax, nsa
-      @c4 = ConnectFour
-    end
-
-    it "does something" do
-      
-    end
-    
   end
 
 end

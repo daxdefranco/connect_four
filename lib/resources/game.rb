@@ -45,18 +45,16 @@ class Game
   end
   
   def get_drop_location(array, column, player)
-    row = 7
-    if check_valid(column) == :check_fail
-      return :check_fail
-    else  
+    # if check_valid(column) == :check_fail
+    #   return :check_fail
+    # else  
       column = column.to_i - 1
-    end
-    until row < 0
+    # end
+    7.downto(0).each do |row|
       if array[row][column.to_i] == 0
         put_player_token(array, row, column, player)
         break
       end
-      row -= 1
     end
     # this should return full ONLY if the until loop completes without calling
     # `put_player_token` - but i think because that's not a 'return' value, `:full`
@@ -87,6 +85,14 @@ class Game
       return :winner
     end
   end  
+
+  def end_of_game_message(round, player)
+    if round == 64
+      puts "You're both winners"
+    else  
+      puts "\nCongratulations, Player #{player}.  You've won!"
+    end
+  end
 
   def toggle(player)
     player == 1 ? 2 : 1
